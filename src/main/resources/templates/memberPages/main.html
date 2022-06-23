@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>main</title>
+    <style>
+        a {
+            text-decoration-line: underline;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>회원만 접근 가능한 페이지</h2>
+<!--    로그인 회원번호: [[${session.loginId}]]<br>-->
+    로그인 회원번호: <sapn th:text="${session[loginId]}"></sapn><br>
+    로그인 이메일: [[${session.loginEmail}]]<br>
+    <a onclick="memberDetail()">마이페이지</a><br>
+    <a onclick="ajaxDetail()">상세조회(ajax)</a><br>
+    <p th:if="${session.loginEmail != null}"><a onclick="memberLogout()">로그아웃</a></p>
+    <p id="detail-contents"></p>
+</body>
+<script>
+    const memberDetail = () => {
+        const id = '[[${session.loginId}]]';
+        if (id != '') {
+            location.href = "/member/" + id;
+        } else {
+            alert("로그인 후 상세정보 조회가 가능합니다.");
+        }
+    }
+
+    const ajaxDetail = () => {
+        const id = '[[${session.loginId}]]';
+        const detailContents = document.querySelector("#detail-contents");
+        $.ajax({
+            type: "get",
+            url: "/member/ajax/" + id,
+            data: {"id": id},
+            dataType: "json",
+            success: function (result) {
+                let output = '<table><tr>';
+                    output += '<th>회원번호</th>';
+                    output += '<th>이메일</th>';
+                    output += '<th>비밀번호</th>';
+                    output += '<th>이름</th>';
+                    output += '<th>나이</th>';
+                    output += '<th>전화번호</th></tr>';
+
+                    output += '<tr><td>' + result.id + '</td>';
+                    output += '<td>' + result.memberEmail + '</td>';
+                    output += '<td>' + result.memberPassword + '</td>';
+                    output += '<td>' + result.memberName + '</td>';
+                    output += '<td>' + result.memberAge + '</td>';
+                    output += '<td>' + result.memberPhone + '</td></tr>';
+
+                detailContents.innerHTML = output;
+            }
+        });
+    }
+
+    const memberLogout = () => {
+        location.href = "/member/logout";
+    }
+</script>
+</html>
