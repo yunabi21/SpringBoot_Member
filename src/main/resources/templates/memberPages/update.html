@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>update</title>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>update</title>
 </head>
 <body>
-    <h2>회원정보수정</h2>
-    <form action="/member/update" method="post">
-        <input type="hidden" name="id" th:value="${member.id}">
-        이메일: <input type="text" name="memberEmail" th:value="${member.memberEmail}"><br>
-        비밀번호: <input type="text" name="memberPassword" th:value="${member.memberPassword}"><br>
-        이름: <input type="text" name="memberName" th:value="${member.memberName}"><br>
-        나이: <input type="text" name="memberAge" th:value="${member.memberAge}"><br>
-        전화번호: <input type="text" name="memberPhone" th:value="${member.memberPhone}"><br>
-        <input type="submit" value="정보수정"><br>
-    </form>
+<h2>회원정보수정</h2>
+<form action="/member/update" method="post">
+  <input type="hidden" name="id" th:value="${member.id}">
+  이메일: <input type="text" name="memberEmail" th:value="${member.memberEmail}"><br>
+  비밀번호: <input type="text" name="memberPassword" th:value="${member.memberPassword}"><br>
+  이름: <input type="text" name="memberName" th:value="${member.memberName}"><br>
+  나이: <input type="text" name="memberAge" th:value="${member.memberAge}"><br>
+  전화번호: <input type="text" name="memberPhone" th:value="${member.memberPhone}"><br>
+  <input type="submit" value="정보수정"><br>
+</form>
 
-    <h2>회원정보수정(ajax)</h2>
-    <input type="hidden" name="id" id="id" th:value="${member.id}">
-    이메일: <input type="text" name="memberEmail" id="memberEmail" th:value="${member.memberEmail}"><br>
-    비밀번호: <input type="text" name="memberPassword" id="memberPassword" th:value="${member.memberPassword}"><br>
-    이름: <input type="text" name="memberName" id="memberName" th:value="${member.memberName}"><br>
-    나이: <input type="text" name="memberAge" id="memberAge" th:value="${member.memberAge}"><br>
-    전화번호: <input type="text" name="memberPhone" id="memberPhone" th:value="${member.memberPhone}"><br>
-    <input type="button" onclick="ajaxUpdate()" value="ajax정보수정"><br>
+<h2>회원정보수정(ajax)</h2>
+<input type="hidden" name="id" id="id" th:value="${member.id}">
+이메일: <input type="text" name="memberEmail" id="memberEmail" th:value="${member.memberEmail}"><br>
+비밀번호: <input type="text" name="memberPassword" id="memberPassword" th:value="${member.memberPassword}"><br>
+이름: <input type="text" name="memberName" id="memberName" th:value="${member.memberName}"><br>
+나이: <input type="text" name="memberAge" id="memberAge" th:value="${member.memberAge}"><br>
+전화번호: <input type="text" name="memberPhone" id="memberPhone" th:value="${member.memberPhone}"><br>
+<input type="button" onclick="ajaxUpdate()" value="ajax정보수정"><br>
 
 </body>
 <script>
-    const ajaxUpdate = () => {
-        const id = document.querySelector("#id").value;
-        const memberEmail = document.querySelector("#memberEmail").value;
-        const memberPassword = document.querySelector("#memberPassword").value;
-        const memberName = document.querySelector("#memberName").value;
-        const memberAge = document.querySelector("#memberAge").value;
-        const memberPhone = document.querySelector("#memberPhone").value;
-        $.ajax({
-            type: "put",
-            url: "/member/update",
-            data: {"id": id, "memberEmail": memberEmail, "memberPassword": memberPassword, "memberName": memberName,
-                    "memberAge": memberAge, "memberPhone": memberPhone},
-            dataType: "text",
-            success: function () {
-                alert("수정이 완료되었습니다.");
-                location.href = "/member/" + id;
-            }
-        });
-    }
+  const ajaxUpdate = () => {
+    const id = document.querySelector("#id").value;
+    const memberEmail = document.querySelector("#memberEmail").value;
+    const memberPassword = document.querySelector("#memberPassword").value;
+    const memberName = document.querySelector("#memberName").value;
+    const memberAge = document.querySelector("#memberAge").value;
+    const memberPhone = document.querySelector("#memberPhone").value;
+    $.ajax({
+      type: "put",
+      url: "/member/update",
+      data: {"id": id, "memberEmail": memberEmail, "memberPassword": memberPassword, "memberName": memberName,
+        "memberAge": memberAge, "memberPhone": memberPhone},
+      dataType: "text",
+      success: function () {
+        alert("수정이 완료되었습니다.");
+        location.href = "/member/" + id;
+      }
+    });
+  }
 </script>
 </html>

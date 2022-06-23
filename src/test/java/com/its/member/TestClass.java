@@ -17,31 +17,31 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 public class TestClass {
-    @Autowired
-    private MemberService memberService;
+  @Autowired
+  private MemberService memberService;
 
-    public MemberDTO newMember(int i) {
-        MemberDTO member = new MemberDTO("charm"+i, "1"+i, "이름"+i, 1+i, "010-"+i);
-        return member;
-    }
+  public MemberDTO newMember(int i) {
+    MemberDTO member = new MemberDTO("charm"+i, "1"+i, "이름"+i, 1+i, "010-"+i);
+    return member;
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void saveTest() {
-        Long saveId = memberService.save(newMember(1));
-        MemberDTO saveDTO = memberService.findById(saveId);
-        assertThat(newMember(1).getMemberEmail()).isEqualTo(saveDTO.getMemberEmail());
-    }
+  @Test
+  @Transactional
+  @Rollback
+  public void saveTest() {
+    Long saveId = memberService.save(newMember(1));
+    MemberDTO saveDTO = memberService.findById(saveId);
+    assertThat(newMember(1).getMemberEmail()).isEqualTo(saveDTO.getMemberEmail());
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void loginTest() {
-        memberService.save(newMember(1));
-        MemberDTO loginDTO = new MemberDTO("charm@nav.com", "1234");
-        loginDTO = memberService.login(loginDTO);
-        assertThat(loginDTO).isNotNull();
+  @Test
+  @Transactional
+  @Rollback
+  public void loginTest() {
+    memberService.save(newMember(1));
+    MemberDTO loginDTO = new MemberDTO("charm@nav.com", "1234");
+    loginDTO = memberService.login(loginDTO);
+    assertThat(loginDTO).isNotNull();
 
 //        final String memberEmail = "로그인용이메일";
 //        final String memberPassword = "로그인용비번";
@@ -55,66 +55,66 @@ public class TestClass {
 //        loginMemberDTO.setMemberPassword(memberPassword);
 //        MemberDTO loginResult = memberService.login(loginMemberDTO);
 //        assertThat(loginResult).isNotNull();
-    }
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void listTest() {
-        memberService.save(newMember(1));
-        MemberDTO memberDTO2 = new MemberDTO("123@nav.com", "1234", "이름2", 10, "010-222-222");
-        memberService.save(memberDTO2);
-        MemberDTO memberDTO3 = new MemberDTO("999@nav.com", "1234", "이름3", 30, "010-333-333");
-        memberService.save(memberDTO3);
-        List<MemberDTO> memberDTOList = memberService.findAll();
-        assertThat(memberDTOList.size()).isEqualTo(3);
-    }
+  @Test
+  @Transactional
+  @Rollback
+  public void listTest() {
+    memberService.save(newMember(1));
+    MemberDTO memberDTO2 = new MemberDTO("123@nav.com", "1234", "이름2", 10, "010-222-222");
+    memberService.save(memberDTO2);
+    MemberDTO memberDTO3 = new MemberDTO("999@nav.com", "1234", "이름3", 30, "010-333-333");
+    memberService.save(memberDTO3);
+    List<MemberDTO> memberDTOList = memberService.findAll();
+    assertThat(memberDTOList.size()).isEqualTo(3);
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void findByIdTest() {
-        Long saveId = memberService.save(newMember(1));
-        assertThat(memberService.findById(saveId)).isNotNull();
-    }
+  @Test
+  @Transactional
+  @Rollback
+  public void findByIdTest() {
+    Long saveId = memberService.save(newMember(1));
+    assertThat(memberService.findById(saveId)).isNotNull();
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void deleteTest() {
-        Long deleteId = memberService.save(newMember(1));
-        memberService.delete(deleteId);
-        assertThat(memberService.findById(deleteId)).isNull();
-    }
+  @Test
+  @Transactional
+  @Rollback
+  public void deleteTest() {
+    Long deleteId = memberService.save(newMember(1));
+    memberService.delete(deleteId);
+    assertThat(memberService.findById(deleteId)).isNull();
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void updateTest() {
-        Long saveId = memberService.save(newMember(1));
-        MemberDTO saveDTO = memberService.findById(saveId);
-        saveDTO.setMemberEmail("update@nav.com");
-        memberService.save(saveDTO);
-        MemberDTO updateDTO = memberService.findById(saveId);
-        assertThat(newMember(1).getMemberEmail()).isEqualTo(updateDTO.getMemberEmail());
-    }
+  @Test
+  @Transactional
+  @Rollback
+  public void updateTest() {
+    Long saveId = memberService.save(newMember(1));
+    MemberDTO saveDTO = memberService.findById(saveId);
+    saveDTO.setMemberEmail("update@nav.com");
+    memberService.save(saveDTO);
+    MemberDTO updateDTO = memberService.findById(saveId);
+    assertThat(newMember(1).getMemberEmail()).isEqualTo(updateDTO.getMemberEmail());
+  }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void duplicateTest() {
-        memberService.save(newMember(1));
-        MemberDTO newDTO = new MemberDTO();
-        newDTO.setMemberEmail("charm@nav.com");
-        MemberEntity duplicateEntity = memberService.emailCheck(newDTO.getMemberEmail());
-        assertThat(duplicateEntity).isNotNull();
-    }
+  @Test
+  @Transactional
+  @Rollback
+  public void duplicateTest() {
+    memberService.save(newMember(1));
+    MemberDTO newDTO = new MemberDTO();
+    newDTO.setMemberEmail("charm@nav.com");
+    MemberEntity duplicateEntity = memberService.emailCheck(newDTO.getMemberEmail());
+    assertThat(duplicateEntity).isNotNull();
+  }
 
-    @Test
-    @DisplayName("회원 데이터 저장")
-    public void memberSave() {
-        IntStream.rangeClosed(1, 20).forEach(i -> {
-            memberService.save(newMember(i));
-        });
-    }
+  @Test
+  @DisplayName("회원 데이터 저장")
+  public void memberSave() {
+    IntStream.rangeClosed(1, 20).forEach(i -> {
+      memberService.save(newMember(i));
+    });
+  }
 }

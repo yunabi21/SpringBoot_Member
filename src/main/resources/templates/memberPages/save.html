@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>save</title>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>save</title>
 </head>
 <body>
-    <h2>회원가입페이지</h2>
-    <form action="/member/save" method="post">
-        이메일: <input type="text" name="memberEmail" id="memberEmail" onblur="dupIdCheck()"><br>
-        <p id="duplicate-check"></p>
-        비밀번호: <input type="text" name="memberPassword"><br>
-        이름: <input type="text" name="memberName"><br>
-        나이: <input type="text" name="memberAge"><br>
-        전화번호: <input type="text" name="memberPhone"><br>
-        <input type="submit" value="회원가입"><br>
-    </form>
+<h2>회원가입페이지</h2>
+<form action="/member/save" method="post">
+  이메일: <input type="text" name="memberEmail" id="memberEmail" onblur="dupIdCheck()"><br>
+  <p id="duplicate-check"></p>
+  비밀번호: <input type="text" name="memberPassword"><br>
+  이름: <input type="text" name="memberName"><br>
+  나이: <input type="text" name="memberAge"><br>
+  전화번호: <input type="text" name="memberPhone"><br>
+  <input type="submit" value="회원가입"><br>
+</form>
 </body>
 <script>
-    const dupIdCheck = () => {
-        const memberEmail = document.querySelector("#memberEmail").value;
-        console.log(memberEmail);
-        const dupAlert = document.querySelector("#duplicate-check");
-        $.ajax({
-           type: "post",
-           url: "/member/dup-check",
-           data: {"memberEmail": memberEmail},
-           dataType: "text",
-           success: function (result) {
-               if (result == "ok") {
-                    dupAlert.innerHTML = "사용가능한 아이디입니다.";
-                    dupAlert.style.color = "green";
-               } else {
-                   dupAlert.innerHTML = "이미 사용중인 아이디입니다.";
-                   dupAlert.style.color = "red";
-               }
-           }
-        });
-    }
+  const dupIdCheck = () => {
+    const memberEmail = document.querySelector("#memberEmail").value;
+    console.log(memberEmail);
+    const dupAlert = document.querySelector("#duplicate-check");
+    $.ajax({
+      type: "post",
+      url: "/member/dup-check",
+      data: {"memberEmail": memberEmail},
+      dataType: "text",
+      success: function (result) {
+        if (result == "ok") {
+          dupAlert.innerHTML = "사용가능한 아이디입니다.";
+          dupAlert.style.color = "green";
+        } else {
+          dupAlert.innerHTML = "이미 사용중인 아이디입니다.";
+          dupAlert.style.color = "red";
+        }
+      }
+    });
+  }
 </script>
 </html>

@@ -38,7 +38,7 @@
   <button th:onclick="ajaxDelete([[${member.id}]])">ajax-회원탈퇴(삭제)</button>
 
 </body>
-<script>
+<script th:inline="javascript">
   const memberUpdate = () => {
     const id = '[[${session.loginId}]]';
     if (id != '') {
@@ -50,6 +50,21 @@
 
   const memberDelete = (id) => {
     location.href = "/member/delete/" + id;
+  }
+
+  const ajaxDelete = (id) => {
+    $.ajax({
+      type: 'delete',
+      url: '/member/' + id,
+      dataType: 'text',
+      success: function () {
+        alert('삭제 했어요');
+        location.href = '/';
+      },
+      err: function () {
+        alert('에러');
+      }
+    })
   }
 </script>
 </html>
