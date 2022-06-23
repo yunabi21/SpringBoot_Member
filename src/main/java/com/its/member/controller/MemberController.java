@@ -3,6 +3,8 @@ package com.its.member.controller;
 import com.its.member.dto.MemberDTO;
 import com.its.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -75,12 +77,12 @@ public class MemberController {
   }
 
   @DeleteMapping("/{id}")
-  public @ResponseBody String deleteMapping(@PathVariable Long id, HttpSession session) {
+  public ResponseEntity deleteMapping(@PathVariable Long id, HttpSession session) {
     memberService.delete(id);
     if (session.getAttribute("loginEmail") != "관리자") {
       session.invalidate();
     }
-    return "ok";
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @GetMapping("/update/{id}")
@@ -96,10 +98,10 @@ public class MemberController {
     return "redirect:/member/" + memberDTO.getId();
   }
 
-  @PutMapping("/update")
-  public @ResponseBody String putUpdate(@ModelAttribute MemberDTO memberDTO) {
+  @PutMapping("/")
+  public ResponseEntity putUpdate(@RequestBody MemberDTO memberDTO) {
     memberService.update(memberDTO);
-    return "ok";
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @PostMapping("/dup-check")

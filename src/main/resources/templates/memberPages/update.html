@@ -35,15 +35,24 @@
     const memberName = document.querySelector("#memberName").value;
     const memberAge = document.querySelector("#memberAge").value;
     const memberPhone = document.querySelector("#memberPhone").value;
+    const updateData = JSON.stringify({
+      id: id,
+      memberEmail: memberEmail,
+      memberPassword: memberPassword,
+      memberName: memberName,
+      memberAge: memberAge,
+      memberPhone: memberPhone
+    });
     $.ajax({
       type: "put",
-      url: "/member/update",
-      data: {"id": id, "memberEmail": memberEmail, "memberPassword": memberPassword, "memberName": memberName,
-        "memberAge": memberAge, "memberPhone": memberPhone},
-      dataType: "text",
+      url: "/member/" + id,
+      data: updateData,
       success: function () {
         alert("수정이 완료되었습니다.");
-        location.href = "/member/" + id;
+        location.href = "/member/";
+      },
+      err: function () {
+        alert('에러');
       }
     });
   }

@@ -42,11 +42,7 @@ public class MemberService {
 
   public MemberEntity emailCheck(String memberEmail) {
     Optional<MemberEntity> member = memberRepository.findByMemberEmail(memberEmail);
-    if (member.isPresent()) {
-      return member.get();
-    } else {
-      return null;
-    }
+    return member.orElse(null);
   }
 
   public List<MemberDTO> findAll() {

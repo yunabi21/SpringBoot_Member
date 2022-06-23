@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{../../static/js/jquery.js}"></script>
     <title>detail</title>
 </head>
 <body>
@@ -56,10 +56,10 @@
     $.ajax({
       type: 'delete',
       url: '/member/' + id,
-      dataType: 'text',
-      success: function () {
+      // dataType: 'text',
+      success: function () {  // status code = 200
         alert('삭제 했어요');
-        location.href = '/';
+        location.href = '/member/';
       },
       err: function () {
         alert('에러');
